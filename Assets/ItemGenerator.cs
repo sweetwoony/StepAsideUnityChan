@@ -19,24 +19,28 @@ public class ItemGenerator : MonoBehaviour {
 	//アイテムを出すx方向の範囲
 	private float posRange = 3.4f;
 
+	//ゴール座標
+	private Vector3 m_goalPosition;
 
 
-	// Use this for initialization
 	void Start () {
-	
+		m_goalPosition = GameObject.Find ("RightGoalMark").transform.position;
 	}
 
-	// Update is called once per frame
+
 	void Update () {
-
-
 
 		//unityちゃんのオブジェクトを取得
 		this.unitychan = GameObject.Find("unitychan");
 
 		//オブジェクトが生成される範囲を指定
-		//　　　　　　　　（　Unityちゃんの居る位置　＋　60　＝　奥側の視認限界範囲）
+		//　　　　　　　　（　Unityちゃんの居る位置　＋　45　＝　奥側の視認限界範囲）
 		this.ItemPopRange = unitychan.transform.position.z + 45;
+
+		//　ゴールより後ろには生成しない指示
+		if (ItemPopRange > m_goalPosition.z) {
+			return;
+		}
 
 		//オブジェクトが生成されるまでの時間を加算
 		this.ItemSet += Time.deltaTime;
